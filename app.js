@@ -57,6 +57,8 @@ function parseLine(line) {
 }
 
 function parseTrades(content) {
+  // Strip BOM and normalize line endings
+  content = content.replace(/^\uFEFF/, "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
   const trades = [];
   for (const line of content.split("\n")) {
     if (!line.startsWith("Trades,")) continue;
