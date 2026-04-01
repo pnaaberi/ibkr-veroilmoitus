@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBKR Veroilmoitus</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Upload state -->
+  <div id="upload-view" class="view active">
+    <div class="container">
+      <h1>IBKR Veroilmoitus</h1>
+      <p class="subtitle">Laske luovutusvoitot ja -tappiot suoraan IBKR:n Activity Statementista</p>
+      <div id="dropzone">
+        <div class="dropzone-content">
+          <div class="drop-icon">&#xf0ee;</div>
+          <p>Raahaa IBKR Activity Statement CSV tähän</p>
+          <p class="hint">tai klikkaa valitaksesi tiedosto</p>
+        </div>
+        <input type="file" id="file-input" accept=".csv" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Processing state -->
+  <div id="processing-view" class="view">
+    <div class="container">
+      <div class="spinner"></div>
+      <p id="status-text">Haetaan ECB-valuuttakurssit...</p>
+    </div>
+  </div>
+
+  <!-- Results state -->
+  <div id="results-view" class="view">
+    <div class="container">
+      <h1>Verotiedot <span id="result-year"></span></h1>
+
+      <div class="tax-cards">
+        <div class="card" data-field="luovutushinnat">
+          <div class="card-label">Luovutushinnat yhteensä</div>
+          <div class="card-value" id="val-luovutushinnat"></div>
+          <button class="copy-btn" title="Kopioi">&#xf0c5;</button>
+        </div>
+        <div class="card card-gain" data-field="luovutusvoitot">
+          <div class="card-label">Luovutusvoitot yhteensä</div>
+          <div class="card-value" id="val-luovutusvoitot"></div>
+          <button class="copy-btn" title="Kopioi">&#xf0c5;</button>
+        </div>
+        <div class="card card-loss" data-field="luovutustappiot">
+          <div class="card-label">Luovutustappiot yhteensä</div>
+          <div class="card-value" id="val-luovutustappiot"></div>
+          <button class="copy-btn" title="Kopioi">&#xf0c5;</button>
+        </div>
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-item">
+          <span class="summary-label">Kauppoja</span>
+          <span class="summary-value" id="val-trades"></span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Avauksia</span>
+          <span class="summary-value" id="val-opens"></span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Sulkemisia</span>
+          <span class="summary-value" id="val-closes"></span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Realized P/L (USD)</span>
+          <span class="summary-value" id="val-rpl-usd"></span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Komissiot (USD)</span>
+          <span class="summary-value" id="val-comm-usd"></span>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-row">
+        <div class="chart-box">
+          <h2>Kuukausittainen P/L (USD)</h2>
+          <canvas id="chart-monthly"></canvas>
+        </div>
+        <div class="chart-box">
+          <h2>Kumulatiivinen P/L (USD)</h2>
+          <canvas id="chart-cumulative"></canvas>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" data-tab="by-symbol">Osakkeittain</button>
+        <button class="tab" data-tab="by-asset">Omaisuusluokittain</button>
+        <button class="tab" data-tab="by-month">Kuukausittain</button>
+      </div>
+
+      <div class="tab-content active" id="tab-by-symbol">
+        <table id="table-symbol"><thead><tr><th>Osake</th><th>P/L (USD)</th></tr></thead><tbody></tbody></table>
+      </div>
+      <div class="tab-content" id="tab-by-asset">
+        <table id="table-asset"><thead><tr><th>Omaisuusluokka</th><th>P/L (USD)</th></tr></thead><tbody></tbody></table>
+      </div>
+      <div class="tab-content" id="tab-by-month">
+        <table id="table-month"><thead><tr><th>Kuukausi</th><th>P/L (USD)</th></tr></thead><tbody></tbody></table>
+      </div>
+
+      <button id="reset-btn">Analysoi toinen tiedosto</button>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div id="error-view" class="view">
+    <div class="container">
+      <h1>Virhe</h1>
+      <p id="error-text"></p>
+      <button id="error-reset-btn">Yritä uudelleen</button>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
