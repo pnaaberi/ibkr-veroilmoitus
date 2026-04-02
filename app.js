@@ -35,7 +35,9 @@ function fmtUsd(n) {
 
 function parseNum(s) {
   s = s.trim().replace(/,/g, "");
-  return s ? parseFloat(s) : 0;
+  if (!s || s === "-" || s === "--") return 0;
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n;
 }
 
 function parseLine(line) {
@@ -64,6 +66,8 @@ function parseTrades(content) {
     if (!line.startsWith("Trades,")) continue;
     const p = parseLine(line.trimEnd());
     if (p.length < 17 || p[1] !== "Data" || p[2] !== "Trade") continue;
+    // Skip forex trades — their P/L is in a separate section and reported differently
+    if (p[3] === "Forex") continue;
 
     let qty;
     try {
@@ -141,6 +145,9 @@ async function getRatesForTrades(trades) {
   const allRates = {};
   for (const y of years) {
     Object.assign(allRates, await fetchEcbRates(parseInt(y)));
+  }
+  if (Object.keys(allRates).length === 0) {
+    allRates._fallback = true;
   }
   return allRates;
 }
@@ -276,6 +283,7 @@ async function handleFile(file) {
 
     statusEl.textContent = "Lasketaan verotietoja...";
     const result = computeTax(trades, fxRates);
+    result._ecbFallback = !!fxRates._fallback;
 
     renderResults(result);
     showView("results");
@@ -291,6 +299,14 @@ function renderResults(d) {
   const months = Object.keys(d.by_month);
   const year = months.length ? months[0].slice(0, 4) : "";
   document.getElementById("result-year").textContent = year;
+
+  // ECB fallback warning
+  const warningEl = document.getElementById("ecb-warning");
+  if (d._ecbFallback) {
+    warningEl.style.display = "block";
+  } else {
+    warningEl.style.display = "none";
+  }
 
   document.getElementById("val-luovutushinnat").textContent =
     fmtFi(d.luovutushinnat) + " \u20ac";

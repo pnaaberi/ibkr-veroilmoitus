@@ -318,6 +318,17 @@ tr:nth-child(even) { background: rgba(255, 255, 255, 0.015); }
   margin: 1rem 0;
 }
 
+.warning {
+  background: rgba(196, 160, 50, 0.1);
+  border: 1px solid rgba(196, 160, 50, 0.3);
+  border-radius: var(--radius);
+  color: #c4a032;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
 /* Instructions */
 .instructions {
   margin-top: 2.5rem;
