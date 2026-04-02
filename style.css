@@ -350,9 +350,35 @@ tr:nth-child(even) { background: rgba(255, 255, 255, 0.015); }
   color: var(--accent-dim);
 }
 
-.instructions > .hint {
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
+.instructions a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.instructions a:hover {
+  text-decoration: underline;
+}
+
+.instructions .notes-list {
+  margin: 1rem 0 0.5rem 1.25rem;
+  color: var(--fg);
+  font-size: 0.85rem;
+  line-height: 1.8;
+  list-style: none;
+  padding: 0;
+  margin-left: 0;
+}
+
+.instructions .notes-list li {
+  padding-left: 1.25rem;
+  position: relative;
+}
+
+.instructions .notes-list li::before {
+  content: "~";
+  color: var(--accent-dim);
+  position: absolute;
+  left: 0;
 }
 
 /* Responsive */

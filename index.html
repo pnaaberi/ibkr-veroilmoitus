@@ -24,17 +24,38 @@
       </div>
 
       <details class="instructions">
-        <summary>Miten saan Activity Statementin IBKR:stä?</summary>
+        <summary>1. Miten saan CSV-tiedoston IBKR:stä?</summary>
         <ol>
-          <li>Kirjaudu sisään <strong>Interactive Brokersiin</strong></li>
-          <li>Mene <strong>Performance & Reports</strong> &rarr; <strong>Statements</strong></li>
-          <li>Valitse <strong>Activity</strong></li>
-          <li>Aseta ajanjakso kattamaan koko verovuosi (esim. 1.1.2025 &ndash; 31.12.2025)</li>
-          <li>Valitse muodoksi <strong>CSV</strong></li>
-          <li>Klikkaa <strong>Run</strong> ja lataa tiedosto</li>
-          <li>Raahaa ladattu CSV-tiedosto tähän</li>
+          <li>Kirjaudu <a href="https://www.interactivebrokers.com/sso/Login" target="_blank" rel="noopener">Interactive Brokersiin</a></li>
+          <li>Mene <strong>Performance &amp; Reports</strong> &rarr; <strong>Statements</strong></li>
+          <li>Valitse tyypiksi <strong>Activity</strong></li>
+          <li>Aseta jakso: <strong>Annual</strong> ja valitse verovuosi</li>
+          <li>Vaihda muodoksi <strong>CSV</strong> (oletus on HTML)</li>
+          <li>Klikkaa <strong>Run</strong> &rarr; tiedosto latautuu automaattisesti</li>
         </ol>
-        <p class="hint">Tiedostosi käsitellään kokonaan selaimessasi &mdash; datasi ei lähetetä minnekään.</p>
+      </details>
+
+      <details class="instructions">
+        <summary>2. Miten ilmoitan OmaVerossa?</summary>
+        <ol>
+          <li>Kirjaudu <a href="https://www.vero.fi/omavero" target="_blank" rel="noopener">OmaVeroon</a></li>
+          <li><strong>Esitäytetty veroilmoitus</strong> &rarr; <strong>Korjaa tietoja</strong></li>
+          <li>Etsi kohta <strong>Arvopaperien myyntivoitot</strong> &rarr; <strong>Avaa erittely</strong></li>
+          <li>Valitse <strong>"Ilmoitan tiedot liitetiedostossa"</strong></li>
+          <li>Lisää IBKR:n Activity Statement liitetiedostoksi (PDF on selkein)</li>
+          <li>Syötä kentät alla olevilla luvuilla &mdash; klikkaa kortin kopioi-nappia</li>
+        </ol>
+      </details>
+
+      <details class="instructions">
+        <summary>Huomioitavaa</summary>
+        <ul class="notes-list">
+          <li>Tämä työkalu laskee vain <strong>arvopaperikauppojen</strong> luovutusvoitot ja -tappiot</li>
+          <li><strong>Osingot</strong>, <strong>korot</strong> ja <strong>valuuttakurssivoitot</strong> pitää ilmoittaa erikseen OmaVerossa</li>
+          <li>Valuuttamuunnos tehdään EKP:n päiväkurssilla kauppapäivältä</li>
+          <li>Hankintahinta lasketaan FIFO-menetelmällä (todellinen hankintameno)</li>
+          <li>Tiedostosi käsitellään kokonaan selaimessasi &mdash; datasi ei lähetetä minnekään</li>
+        </ul>
       </details>
     </div>
   </div>
