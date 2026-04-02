@@ -403,9 +403,12 @@ function renderTable(tableId, data) {
   tbody.innerHTML = "";
   for (const [key, val] of Object.entries(data)) {
     const tr = document.createElement("tr");
-    const cls = val >= 0 ? "val-pos" : "val-neg";
-    const rounded = Math.round(val * 100) / 100;
-    tr.innerHTML = `<td>${key}</td><td class="${cls}">${fmtUsd(rounded)}</td>`;
+    const td1 = document.createElement("td");
+    td1.textContent = key;
+    const td2 = document.createElement("td");
+    td2.className = val >= 0 ? "val-pos" : "val-neg";
+    td2.textContent = fmtUsd(Math.round(val * 100) / 100);
+    tr.append(td1, td2);
     tbody.appendChild(tr);
   }
 }
